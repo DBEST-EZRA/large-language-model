@@ -17,8 +17,8 @@ public class MR_Task1 {
 
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             String[] logEntry = value.toString().split(" ");
-            String logTime = logEntry[0]; // assuming the log timestamp is the first value
-            String logLevel = logEntry[2]; // assuming the log type (INFO, DEBUG) is in the third column
+            String logTime = logEntry[0]; // assuming log timestamp is the first value
+            String logLevel = logEntry[2]; // assuming log type is in the third column
             logType.set(logTime + " " + logLevel);
             context.write(logType, one);
         }
@@ -36,7 +36,7 @@ public class MR_Task1 {
 
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
-        Job job = Job.getInstance(conf, "log type count");
+        Job job = Job.getInstance(conf, "Count of Log type");
         job.setJarByClass(MR_Task1.class);
         job.setMapperClass(LogMapper.class);
         job.setCombinerClass(LogReducer.class);
